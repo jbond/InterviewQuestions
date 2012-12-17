@@ -5,17 +5,17 @@ def simularity(string, suffix)
   i
 end
 
-File.open('output00.txt', 'w') do |output|
-  File.open("input00.txt") do |input|
-    input.gets # skip first line (= number of test cases)
-    input.each do |line|
-      line.chomp!
-      length = line.length
-      total = 0
-      (0..length-1).each do |pos|
-        total = total + simularity(line, line[pos, length-pos])
-      end
-      output.puts total
-    end
+def suffixes_similarity(string)
+  length = string.length
+  total = length # string matches itself, no need to calculate
+  (1..length-1).each do |suffix_start|
+    total = total + simularity(string, string[suffix_start, length-suffix_start])
   end
+  total
+end
+
+test_cases = gets.chomp.to_i # get number of tests
+test_cases.times do
+  line = gets.chomp
+  puts suffixes_similarity(line)
 end
